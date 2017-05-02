@@ -39,8 +39,8 @@ cgrowth <- function(times, y, parms) {
   return(list(dN.dt))
 }
 
-p  <- 0.5
-y0 <- 2
+p  <- c(p=0.5)
+y0 <- c(N=2)
 t  <- 0:20
 
 sol <- ode(y = y0, times = t, func = cgrowth, parms = p)
@@ -65,12 +65,12 @@ clogistic <- function(times, y, parms) {
   r <- parms[1]
   K <- parms[2]
   N <- y[1]
-  dN.dt <- r * N * (1 - (N/K))
+  dN.dt <- r * N * (1 - (N / K))
   return(list(dN.dt))
 }
 
-p  <- c(5, 1000)
-y0 <- 2
+p  <- c(r=5, K=1000)
+y0 <- c(N=2)
 t  <- 0:30
 
 sol2 <- ode(y = y0, times = t, func = clogistic, parms = p)
@@ -93,6 +93,8 @@ $$
 $$
 \frac{dP}{dt} = -bP + fPN
 $$
+
+I use the `with` and `as.list` as short hands to not have to unbox/deconstruct variables
 ```{r}
 predpreyLV <- function(t, y, p) {
  with(c(as.list(y), as.list(p)), {
@@ -108,13 +110,13 @@ f <- 0.01
 b <- 0.20
 
 p      <- c(r=r, a=a, b=b, f=f)
-y0     <- c(N = 25, P = 5)
+y0     <- c(N=25, P=5)
 times  <- seq(0, 200, 0.1)
 LV.out <- ode(y = y0, times, predpreyLV, p)
 
 matplot(LV.out[,1], (LV.out[,2:3]), type="l", xlab="Time", 
-        ylab="Population Size",fg="grey70", col=c("darkblue", "red"), col.axis="grey30",
-     col.lab="grey30", col.main="grey30")
+        ylab="Population Size",fg="grey70", col=c("darkblue", "red"),
+        col.axis="grey30", col.lab="grey30", col.main="grey30")
 ```
 
 
