@@ -9,9 +9,11 @@ output:
 Following the tutorial from:
 
 Differential Equations in R Part 1: Representing Basic Dynamics
+
 https://www.youtube.com/watch?v=1iNXQypailI
 
 Differential Equations in R Part 2: Solving Lotka-Volterra Predation Equations
+
 https://www.youtube.com/watch?v=lJqiasw7OPs
 
 Note: I fixed a few mistakes with the functions where it was using more global scope than I wanted.
@@ -119,4 +121,10 @@ matplot(LV.out[,1], (LV.out[,2:3]), type="l", xlab="Time",
         col.axis="grey30", col.lab="grey30", col.main="grey30")
 ```
 
+In phase space it would be
+```{r}
+plot(LV.out[,2], LV.out[,3], type="l", xlab="Prey Density",
+     ylab="Predator Density", fg="grey70", col="steelblue2",
+     col.axis="grey30", col.lab="grey30", col.main="grey30")
+```
 
