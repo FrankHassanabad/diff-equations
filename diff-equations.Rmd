@@ -1,0 +1,87 @@
+---
+title: "differential-equations"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document: default
+---
+
+Following the tutorial from:
+
+Differential Equations in R Part : Representing Basic Dynamics
+https://www.youtube.com/watch?v=1iNXQypailI
+
+Note: I fixed a few mistakes with the functions where it was using more global scope than I wanted.
+
+Install the library [deSolve](http://desolve.r-forge.r-project.org/) from Packages -> Install
+
+Use the library deSolve
+
+```{r}
+library(deSolve)
+```
+
+Solving the continous equation
+$$
+\frac{dN}{dt} = rN
+$$
+
+Create a function 
+```{r}
+cgrowth <- function(times, y, parms) {
+  r <- parms[1]
+  N <- y[1]
+  dN.dt <- r * N
+  return(list(dN.dt))
+}
+
+p  <- 0.5
+y0 <- 2
+t  <- 0:20
+
+sol <- ode(y = y0, times = t, func = cgrowth, parms = p)
+sol
+```
+
+Plotting it would be
+```{r}
+plot(sol, type='o', xlab="Time", ylab="Size", main="Solution",
+     pch=16, cex=0.7, fg="grey70", col="steelblue2", col.axis="grey30",
+     col.lab="grey30", col.main="grey30")
+```
+
+Solving a continous time logistic equation numerically
+
+$$
+\frac{dN}{dt} = rN(1 - \frac{N}{K})
+$$
+
+```{r}
+clogistic <- function(times, y, parms) {
+  r <- parms[1]
+  K <- parms[2]
+  N <- y[1]
+  dN.dt <- r * N * (1 - (N/K))
+  return(list(dN.dt))
+}
+
+p  <- c(5, 1000)
+y0 <- 2
+t  <- 0:30
+
+sol2 <- ode(y = y0, times = t, func = clogistic, parms = p)
+sol2
+```
+
+Plotting it would be
+```{r}
+plot(sol2, type='o', xlab="Time", ylab="Size", main="Solution",
+     pch=16, cex=0.7, fg="grey70", col="steelblue2", col.axis="grey30",
+     col.lab="grey30", col.main="grey30")
+```
+
+
+
+
+
+
