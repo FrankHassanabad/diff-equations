@@ -128,3 +128,46 @@ plot(LV.out[,2], LV.out[,3], type="l", xlab="Prey Density",
      col.axis="grey30", col.lab="grey30", col.main="grey30")
 ```
 
+Making it more realistic by adding a carryig capacity to prey density
+
+$$
+\frac{dN}{dt} = rN[1 - (\frac{N}{K})] - aPN
+$$
+$$
+\frac{dP}{dt} = -bP + fPN
+$$
+
+Numerically in R that would be
+
+```{r}
+predpreyCarryingLV <- function(t, y, p) {
+ with(c(as.list(y), as.list(p)), {
+   dNdt <- r * N * (1 - (N / K)) - a * P * N
+   dPdt <- -b * P + f * P * N
+   return(list(c(dNdt, dPdt)))
+ })
+}
+
+r <- 0.50
+a <- 0.01
+f <- 0.01
+b <- 0.20
+K <- 1000
+
+p      <- c(r=r, a=a, b=b, f=f, K=K)
+y0     <- c(N=25, P=5)
+times  <- seq(0, 1000, 0.1)
+LV.out <- ode(y = y0, times, predpreyCarryingLV, p)
+
+matplot(LV.out[,1], (LV.out[,2:3]), type="l", xlab="Time", 
+        ylab="Population Size",fg="grey70", col=c("darkblue", "red"),
+        col.axis="grey30", col.lab="grey30", col.main="grey30")
+```
+
+As a phase diagram it would be
+
+```{r}
+plot(LV.out[,2], LV.out[,3], type="l", xlab="Prey Density",
+     ylab="Predator Density", fg="grey70", col="steelblue2",
+     col.axis="grey30", col.lab="grey30", col.main="grey30")
+```
