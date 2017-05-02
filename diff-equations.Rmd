@@ -1,9 +1,9 @@
 ---
 title: "differential-equations"
 output:
-  pdf_document: default
-  html_notebook: default
   html_document: default
+  html_notebook: default
+  pdf_document: default
 ---
 
 Following the tutorial from:
@@ -128,7 +128,7 @@ plot(LV.out[,2], LV.out[,3], type="l", xlab="Prey Density",
      col.axis="grey30", col.lab="grey30", col.main="grey30")
 ```
 
-Making it more realistic by adding a carryig capacity to prey density
+Making it more realistic by adding a carrying capacity to prey density
 
 $$
 \frac{dN}{dt} = rN[1 - (\frac{N}{K})] - aPN
